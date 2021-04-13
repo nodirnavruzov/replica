@@ -1,0 +1,240 @@
+/* Указываем box sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Убираем внутренние отступы */
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+  max-width: 100%;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #f2f2f2;
+}
+
+.link {
+  color: #000;
+  &:hover {
+    text-decoration: none;
+    color: #000;
+  }
+}
+
+.link_hover {
+  color: #000;
+  &:hover {
+    color: #48a2e7;
+    text-decoration: none;
+  }
+}
+
+.navbar {
+  height: 60px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background-color: #fff4e1;
+  box-shadow: 0px 1px 10px 0px #fffaf1;
+  justify-content: center;
+
+  .container__navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    .header__links {
+      .navbar-link {
+        margin: 0 10px;
+        font-size: 20px;
+        font-weight: 500;
+        &:hover {
+          transition: 0.4s;
+          color: #48a2e7;
+        }
+      }
+    }
+  }
+}
+
+//* Footer
+.container__footer {
+  background-color: rgb(16, 16, 20);
+  height: 400px;
+}
+
+//* NewsPreview
+
+.news__preview-container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin: 30px 0;
+  padding: 20px;
+  box-shadow: 2px 2px 5px 0px #dadada;
+  .news__preview-header {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    .news__preview-header-left {
+      display: flex;
+
+      .author {
+        font-size: 18px;
+      }
+      .category {
+        margin-right: 20px;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .news__review-category__icon {
+        margin-right: 10px;
+      }
+    }
+    .news__preview-header-right {
+      display: flex;
+    }
+  }
+
+  .news__preview-image {
+    height: 300px;
+    overflow: hidden;
+    border-radius: 10px !important;
+    img {
+      cursor: pointer;
+      width: 100%;
+      transition: 1s;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .news__preview-content {
+    margin-top: 10px;
+    h5 {
+      font-size: 22px;
+    }
+    p {
+      font-size: 18px;
+    }
+  }
+
+  .news__preview-footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .news__preview-state-left {
+      display: flex;
+      .news__state-view {
+        margin-right: 33px;
+      }
+    }
+    .news__preview-state-right {
+      display: flex;
+      .news-like {
+        margin-right: 33px;
+      }
+    }
+  }
+}
+
+//* NewsList
+
+.news__filter-wrap {
+  height: 80px;
+  background-color: #ffffff;
+}
+
+//* TrendContent
+
+//* Main-page
+
+// .container__main-page {
+//   width: 100%;
+//   padding-right: 15px;
+//   padding-left: 15px;
+//   margin-right: auto;
+//   margin-left: auto;
+//   background-color: rgb(255, 255, 255);
+//   height: 800px;
+
+//   @media (min-width: 576px) {
+//     max-width: 540px;
+//   }
+
+//   @media (min-width: 768px) {
+//     max-width: 720px;
+//   }
+//   @media (min-width: 992px) {
+//     max-width: 960px;
+//   }
+
+//   @media (min-width: 1380px) {
+//     max-width: 1300px;
+//   }
+
+//   @media (min-width: 1580px) {
+//     max-width: 1450px;
+//   }
+// }

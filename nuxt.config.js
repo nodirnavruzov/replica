@@ -1,9 +1,6 @@
-const path = require('path')
-const pkg = require('./package.json')
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
-
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'front-end',
@@ -15,42 +12,91 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    { src: '~/assets/scss/styles.scss', lang: 'scss' }
-
-  ],
+  css: [{ src: '~/assets/scss/styles.scss', lang: 'scss' }],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~plugins/app-plugins.js'
+    {
+      src: '~/plugins/vue-editor.js',
+      mode: 'client' 
+    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-  ],
+  buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    // https://go.nuxtjs.dev/bootstrap
-    'bootstrap-vue/nuxt',
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-
-  ],
+  //
+  modules: ['nuxt-client-init-module', 'bootstrap-vue/nuxt'],
+  bootstrapVue: {
+    components: [
+      'b-button',
+      'b-form-input',
+      'b-avatar',
+      'BContainer',
+      'BRow',
+      'BCol',
+      'BCard',
+      'BIcon',
+      'BIconPersonCircle',
+      'BIconChat',
+      'BIconEyeFill',
+      'BIconEye',
+      'BIconShare',
+      'BIconBookmark',
+      'BIconBookmarkFill',
+      'BIconGraphUp',
+      'BIconInstagram',
+      'BIconFacebook',
+      'BIconGithub',
+      'BIconLinkedin',
+      'BIconGearFill',
+      'BIconVectorPen',
+      'BIconTypeBold',
+      'BIconTypeItalic',
+      'BIconTypeStrikethrough',
+      'BIconParagraph',
+      'BIconListUl',
+      'BIconListOl',
+      'BIconListTask',
+      'BIconCodeSlash',
+      'BIconBlockquoteLeft',
+      'BIconDistributeVertical',
+      'BIconFileBreak',
+      'BIconBlockquoteLeft',
+      'BIconImageFill',
+      'BIconNewspaper',
+      'BDropdown',
+      'BDropdownItem',
+      'BFormTextarea',
+      'BModal',
+      'BAlert'
+    ]
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    // See https://github.com/nuxt-community/axios-module#options
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
+  build: {},
+
+  router: {
+    linkActiveClass: 'your-custom-active-link',
+    linkExactActiveClass: 'your-custom-exact-active-link'
+  },
+
+  server: {
+    port: 8080, // default: 3000
+    host: 'localhost', // default: localhost,
+    timing: false
   }
 }

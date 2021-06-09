@@ -1,5 +1,9 @@
 <template></template>
 
-<script>
-export default {};
+ <script>
+export default {
+  mounted() {
+    this.$router.push('/news')
+  }
+}
 </script>

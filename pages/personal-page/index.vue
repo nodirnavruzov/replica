@@ -30,8 +30,8 @@ export default {
     this.user = this.GET_USER
     this.$store
       .dispatch('USER_POSTS', this.user.id)
-      .then(() => {
-        this.articles = this.GET_USER_POSTS
+      .then(articles => {
+        this.articles = articles
       })
       .catch(err => {
         console.log(err)

@@ -34,10 +34,8 @@
       ></b-form-textarea>
     </div>
     <client-only placeholder="Loading...">
-      <!-- <editor ref="editor" :config="config" /> -->
       <div id="codex-editor" ref="editorJs"></div>
     </client-only>
-    <!-- <input type="text" v-model="data.title" /> -->
     <div class="wrapper_publish-btn">
       <div class="button-group">
         <div class="bttn-publish" @click="send()">Publish</div>
@@ -47,15 +45,6 @@
 </template>
 
 <script>
-// import Header from '@editorjs/header'
-// import List from '@editorjs/list'
-// import ImageTool from '@editorjs/image'
-// import InlineCode from '@editorjs/inline-code'
-// import Embed from '@editorjs/embed'
-// import Quote from '@editorjs/quote'
-// import CodeTool from '@editorjs/code'
-// import LinkTool from '@editorjs/link'
-// import Paragraph from '@editorjs/paragraph'
 import createHTML from '@/utils/createHTML'
 import formatDate from '@/utils/formatDate'
 import moment from 'moment'
@@ -128,74 +117,6 @@ export default {
         jsonData: null
       },
       articleHTML: ''
-      // config: {
-      //   tools: {
-      //     header: {
-      //       class: Header,
-      //       config: {
-      //         placeholder: 'Enter a Header',
-      //         levels: [2, 3, 4],
-      //         defaultLevel: 3
-      //       }
-      //     },
-      //     paragraph: {
-      //       class: Paragraph,
-      //       inlineToolbar: true
-      //     },
-      //     list: {
-      //       class: List,
-      //       inlineToolbar: true
-      //     },
-      //     image: {
-      //       class: ImageTool,
-      //       config: {
-      //         endpoints: {
-      //           byFile: 'http://localhost:3000/api/upload/upload-image' // Your backend file uploader endpoint
-      //         }
-      //       }
-      //     },
-      //     inlineCode: {
-      //       class: InlineCode,
-      //       shortcut: 'CMD+SHIFT+M'
-      //     },
-      //     embed: {
-      //       class: Embed,
-      //       config: {
-      //         services: {
-      //           youtube: true,
-      //           pinterest: true,
-      //           facebook: true,
-      //           aparat: true,
-      //           instagram: true,
-      //           twitter: true,
-      //           'yandex-music-track': true,
-      //           'yandex-music-album': true,
-      //           'yandex-music-playlist': true,
-      //           vimeo: true,
-      //           'twitch-video': true,
-      //           'twitch-channel': true,
-      //           codepen: true
-      //         }
-      //       }
-      //     },
-      //     quote: {
-      //       class: Quote,
-      //       inlineToolbar: true,
-      //       shortcut: 'CMD+SHIFT+O',
-      //       config: {
-      //         quotePlaceholder: 'Enter a quote',
-      //         captionPlaceholder: "Quote's author"
-      //       }
-      //     },
-      //     code: CodeTool,
-      //     linkTool: {
-      //       class: LinkTool,
-      //       config: {
-      //         endpoint: 'http://localhost:3000/api/upload/content-link' // Your backend endpoint for url data fetching
-      //       }
-      //     }
-      //   }
-      // }
     }
   },
   methods: {
@@ -237,9 +158,10 @@ export default {
             return this.$store.dispatch('SEND_CONTENT', this.data)
           })
           .then(res => {
-            this.data.title = ''
-            this.editor.clear()
-            window.scrollTo(0, 0)
+            location.reload()
+            // this.data.title = ''
+            // this.editor.clear()
+            // window.scrollTo(0, 0)
           })
       } else {
         this.validTitle = false

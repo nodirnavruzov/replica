@@ -55,8 +55,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$router.history.current.fullPath)
-
     if (this.$router.history.current.fullPath == '/news') {
       this.showCategorySort = false
     }

@@ -33,6 +33,9 @@
     <div class="user_articles">
       <b-container>
         <b-row class="user_articles-row">
+          <b-col md="12" class="p-0">
+            <div class="border-bottom mt-4 mb-4"></div>
+          </b-col>
           <b-col md="8" class="user_articles-container">
             <ContentPreview :content="c" v-for="c in content.data" :key="c.id" />
           </b-col>
@@ -42,7 +45,6 @@
   </b-container>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Users',
@@ -53,8 +55,8 @@ export default {
       surname: '',
       email: '',
       password: '',
-      none: ''
+      none: '',
     }
-  }
+  },
 }
 </script>

@@ -1,27 +1,24 @@
 <template>
   <div>
     <Content :content="data" />
-    <!-- <Comments /> -->
   </div>
 </template>
 
 <script>
 import Content from '@/components/Content/Content'
-import Comments from '@/components/comments/Comments.vue'
 import moment from 'moment'
 import axios from 'axios'
 import createIcon from '~/utils/createIcon'
+
 export default {
-  components: { Content, Comments },
-  data() {
-    return {}
-  },
-  async asyncData(context) {
-    let response = await axios.get(`http://localhost:3000/api/content/get-post/${context.params.id}`, {
+  components: { Content },
+  async asyncData({ params }) {
+    let response = await axios.get(`http://localhost:3000/api/content/get-post/${params.id}`, {
       headers: {
         'Content-Type': 'application/json'
       }
     })
+
     let data = response.data[0]
 
     let categoryIcon = createIcon.makeNews()

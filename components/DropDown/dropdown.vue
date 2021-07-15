@@ -61,21 +61,6 @@
                       <div class="dropdown__menu-text">Log out</div>
                     </nuxt-link>
                   </li>
-                  <li class="dropdown__menu-item">
-                    <nuxt-link to="/register" class="dropdown__menu-link" title="Register">
-                      <div class="dropdown__menu-svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                          <path fill="none" d="M0 0h24v24H0z" />
-                          <path
-                            d="M4 15h2v5h12V4H6v5H4V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6zm6-4V8l5 4-5 4v-3H2v-2h8z"
-                            fill="#000"
-                          />
-                        </svg>
-                      </div>
-
-                      <div class="dropdown__menu-text">Sign up</div>
-                    </nuxt-link>
-                  </li>
                 </ul>
               </div>
             </transition>
@@ -87,7 +72,6 @@
 </template>
 
 <script>
-import { EventBus } from '~/boot/EventBus'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -95,19 +79,11 @@ export default {
   data() {
     return {}
   },
-  watch: {
-    $route(to, from) {
-      EventBus.$emit('close-popup', false)
-    }
-  },
   computed: {
     ...mapGetters(['GET_LOGIN_STATE', 'GET_USER'])
   },
   mounted() {
-    // if (this.GET_USER) {
-    // this.userStatus = await this.$store.dispatch('CHECK_USER', user.id)
     this.userStatus = this.GET_LOGIN_STATE
-    // }
   },
   methods: {
     goTo(event_name) {
@@ -199,7 +175,7 @@ hr {
   right: 0;
   position: absolute;
   z-index: 10;
-  height: 18rem !important;
+  height: 15rem !important;
   min-width: 200px;
   margin-top: 3rem;
   overflow-y: auto;

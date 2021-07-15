@@ -168,16 +168,14 @@ $btn-success-color-hover: #004caf;
     }
   }
 }
-
 //* Footer
 
 footer {
   background-color: #1c222a;
-  margin-top: 30px;
   left: 0;
-  bottom: 0; /* Левый нижний угол */
-  color: #fff; /* Цвет текста */
-  width: 100%; /* Ширина слоя */
+  bottom: 0; 
+  color: #fff; 
+  width: 100%; 
   .container__footer {
     padding-bottom: 20px;
     .copyright {
@@ -1224,6 +1222,105 @@ footer {
   }
 }
 
+.change_card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  min-height: 600px;
+  .change_card-content,
+  .change_card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10rem 5rem;
+    background-color: #fff;
+    height: 600px;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 20%), 0 2px 2px rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%);
+    .form-control:focus {
+      overflow: hidden !important;
+      color: #495057;
+      border-color: #69849b !important;
+      outline: 0;
+      box-shadow: 0 0 0 0.1rem #69849b;
+    }
+  }
+
+  .change_card-content {
+    border-radius: 5%;
+  }
+  .change_card-content .change_card-header {
+    min-height: 3rem;
+    text-align: center;
+    padding: 1rem;
+  }
+  .change_card-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .change_card-footer {
+    .change_button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+      cursor: pointer;
+      padding: 7px 20px;
+      color: #fff;
+      background: rgb(34, 54, 243);
+      font-weight: 500;
+      transition: 0.5s;
+      &:hover {
+        box-shadow: rgb(0 0 0 / 80%) 0px 3px 8px;
+        text-decoration: none;
+      }
+      svg {
+        fill: #fff;
+        margin-right: 5px;
+      }
+    }
+    .back_link {
+      margin-left: auto;
+      margin-top: 10px;
+      background-color: #ffb439;
+      color: #fff;
+      text-align: center;
+      max-width: 150px;
+      padding: 8px;
+      border-radius: 0.3rem;
+      text-transform: uppercase;
+      align-items: center;
+      border-radius: 5px;
+      box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+      cursor: pointer;
+      padding: 7px 20px;
+      font-weight: 500;
+      transition: 0.5s;
+      &:hover {
+        box-shadow: rgb(0 0 0 / 80%) 0px 3px 8px;
+        text-decoration: none;
+      }
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        svg {
+          margin-right: 5px;
+        }
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
 // * Login Card
 
 .login_card-container {
@@ -1421,6 +1518,7 @@ footer {
     background: #fff;
     box-shadow: 2px 3px 5px 6px #dadada;
     margin-top: 25px;
+    margin-bottom: 25px;
     border-radius: 10px;
     padding: 20px 0;
     .col {
@@ -1508,7 +1606,7 @@ footer {
             box-shadow: rgb(0 0 0 / 42%) 0px 3px 8px;
           }
         }
-        .change_col {
+        .btn_col {
           margin: 30px auto;
           display: flex;
           justify-content: center;
@@ -1533,8 +1631,33 @@ footer {
               svg {
                 fill: #fff;
               }
-              .change_title {
+              .btn_title {
                 margin-left: 8px;
+              }
+            }
+            .reset_password-btn {
+              min-width: 195px;
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+              border-radius: 10px;
+              box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+              cursor: pointer;
+              margin-left: 12px;
+              padding: 7px 20px;
+              color: #fff;
+              background-color: #8d99ae;
+              font-weight: 500;
+              transition: 0.5s;
+              &:hover {
+                box-shadow: rgb(0 0 0 / 80%) 0px 3px 8px;
+                text-decoration: none;
+              }
+              svg {
+                fill: #fff;
+              }
+              .btn_title {
+                margin-left: 3px;
               }
             }
           }
@@ -1557,6 +1680,9 @@ footer {
       }
     }
   }
+}
+.alert {
+  text-align: center;
 }
 
 // .container__main-page {

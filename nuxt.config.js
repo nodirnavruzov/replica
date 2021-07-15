@@ -22,7 +22,7 @@ export default {
   plugins: [
     {
       src: '~/plugins/vue-editor.js',
-      mode: 'client' 
+      mode: 'client'
     }
   ],
 
@@ -95,8 +95,8 @@ export default {
   },
 
   server: {
-    port: 8080, // default: 3000
-    host: 'localhost', // default: localhost,
+    port: 5050, // default: 3000
+    host: '192.168.2.8', // default: localhost,
     timing: false
   }
 }

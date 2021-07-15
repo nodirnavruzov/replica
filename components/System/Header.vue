@@ -3,7 +3,6 @@
     <div class="container__navbar">
       <div class="logo">
         <div class="logo-wp">
-          <!-- <img class="logo" width="40" src="~static/img/test/done_white_24dp.svg" alt="" /> -->
         </div>
       </div>
       <div class="links header__links">
@@ -26,7 +25,7 @@
           </div>
           <div v-else class="login">
             <nuxt-link class="link link-login" to="/login">
-              <span class="name"> Log in</span>
+              <span class="name"> Login</span>
             </nuxt-link>
           </div>
         </div>
@@ -38,36 +37,24 @@
 <script>
 import dropdown from '@/components/DropDown/dropdown'
 import { mapGetters } from 'vuex'
-import { EventBus } from '~/boot/EventBus'
 
 export default {
   components: { dropdown },
   name: 'Header',
   data() {
     return {
-      // user: {},
       status: false
-      // userStatus: false
     }
   },
 
   computed: {
     ...mapGetters(['GET_LOGIN_STATE', 'GET_USER'])
   },
-
-  mounted() {
-    // if (this.GET_USER) {
-    //   this.user = this.$store.getters.GET_USER
-    //   this.userStatus = await this.$store.dispatch('CHECK_USER', this.user.id)
-    // }
-    EventBus.$on('close-popup', value => {
-      this.status = value
-    })
-  },
   methods: {
     statusChange() {
       if (this.GET_LOGIN_STATE) {
         this.status = !this.status
+        console.log(this.status)
       }
     }
   }

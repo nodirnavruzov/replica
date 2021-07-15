@@ -15,14 +15,12 @@ export default {
   data() {
     return {}
   },
-  async asyncData(context) {
-    let response = await axios.get(`http://localhost:3000/api/content/get-post/${context.params.id}`, {
+  async asyncData({ params }) {
+    let response = await axios.get(`http://localhost:3000/api/content/get-post/${params.id}`, {
       headers: {
         'Content-Type': 'application/json'
       }
     })
-    console.log('get-post', response)
-
     let data = response.data[0]
     let categoryIcon = null
     switch (data.category) {

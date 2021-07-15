@@ -91,7 +91,7 @@
               </b-col>
             </b-row>
           </b-col>
-          <b-col class="change_col" md="5">
+          <b-col class="btn_col" md="5">
             <div class="wrapper__btn">
               <div class="change_btn" @click="change">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -100,7 +100,17 @@
                     d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-5-7h9v2h-4v3l-5-5zm5-4V6l5 5H8V9h4z"
                   />
                 </svg>
-                <p class="change_title">Change</p>
+                <p class="btn_title">Change</p>
+              </div>
+              <div class="reset_password-btn" @click="goTo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path
+                    d="M18.537 19.567A9.961 9.961 0 0 1 12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 2.136-.67 4.116-1.81 5.74L17 12h3a8 8 0 1 0-2.46 5.772l.997 1.795z"
+                    fill="rgba(255,255,255,1)"
+                  />
+                </svg>
+                <p class="btn_title">Change Password</p>
               </div>
             </div>
           </b-col>
@@ -111,7 +121,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapGetters } from 'vuex'
 export default {
   middleware(context) {
@@ -165,38 +174,6 @@ export default {
     }
   },
   methods: {
-    // check_password() {
-    //   axios
-    //     .post('http://localhost:3000/api/user/compare-password', {
-    //       current_password: this.user.current_password,
-    //       user_id: this.user.id
-    //     })
-    //     .then(res => {
-    //       this.current_password_state = res.data
-    //     })
-    //     .catch(err => console.log(err))
-    // },
-    // checkNewPassword() {
-    //   if (this.user.new_password) {
-    //     if (this.user.new_password.length > 6) {
-    //       this.new_password_state = { status: true, message: 'Strong password' }
-    //       return true
-    //     } else {
-    //       this.new_password_state = { status: false, message: 'Passport must be more than 6 characters' }
-    //       return false
-    //     }
-    //   }
-    // },
-    // comparePassword() {
-    //   if (this.user.confirm_new_password === this.user.new_password) {
-    //     this.confirm_password_state = { status: true, message: 'Password is match' }
-    //     return true
-    //   } else {
-    //     this.confirm_password_state = { status: false, message: 'Password is not match' }
-    //     return false
-    //   }
-    // },
-
     async onUpload(e) {
       this.selectedFile = e.target.files[0]
       this.form = new FormData()
@@ -226,24 +203,30 @@ export default {
       // }
     },
     async change() {
-      const userForm = {
-        id: this.GET_USER.id,
-        name: this.user.name,
-        surname: this.user.surname,
-        email: this.user.email,
-        avatar: this.user.avatar,
-        current_password: this.user.current_password
-      }
-      const result = await this.$store.dispatch('CHANGE_SETTINGS', { userForm })
-      if (result.status) {
-        await this.$store.dispatch('UPDATE_USER').then(res => {
-          this.$router.push('/personal-page')
-        })
+      if(this.user.current_password) {
+        const userForm = {
+          id: this.GET_USER.id,
+          name: this.user.name,
+          surname: this.user.surname,
+          email: this.user.email,
+          avatar: this.user.avatar,
+          current_password: this.user.current_password
+        }
+        const result = await this.$store.dispatch('CHANGE_SETTINGS', { userForm })
+        if (result.status) {
+          await this.$store.dispatch('UPDATE_USER').then(res => {
+            this.$router.push('/personal-page')
+          })
+        } else {
+          this.current_password_state = false
+        }
       } else {
         this.current_password_state = false
       }
     },
-
+    goTo() {
+      this.$router.push('/personal-page/settings/change-password')
+    },
     disableBtn(e) {
       switch (e) {
         case 'name':

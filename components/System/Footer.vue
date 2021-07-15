@@ -20,27 +20,28 @@
           <h5>Social networks</h5>
           <ul class="nav">
             <li>
-              <nuxt-link class="nav-footer" to="">
+              <a href="https://www.instagram.com/navruzov_n_k/" class="nav-footer" to="">
                 <b-icon icon="instagram" aria-hidden="true"></b-icon>
-                Instagram</nuxt-link
+                Instagram</a
               >
             </li>
             <li>
-              <nuxt-link class="nav-footer" to="">
+              <a href="https://t.me/BlueSky_FTW" class="nav-footer" to="">
                 <img src="~static/img/img-layouts/telegram-app.svg" alt="" />
-                Telegram</nuxt-link
+                Telegram</a
               >
             </li>
             <li>
-              <nuxt-link class="nav-footer" to="">
+              <a href="https://www.linkedin.com/in/nodir-navruzov-705a64202" class="nav-footer" to="">
                 <b-icon icon="linkedin" aria-hidden="true"></b-icon>
-                LinkedIn</nuxt-link
+                LinkedIn</a
               >
             </li>
             <li>
-              <nuxt-link class="nav-footer" to="">
+              
+              <a href="https://github.com/nodirnavruzov" class="nav-footer">
                 <b-icon icon="github" aria-hidden="true"></b-icon>
-                GitHub</nuxt-link
+                GitHub</a
               >
             </li>
           </ul>

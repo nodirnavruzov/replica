@@ -1,6 +1,6 @@
 import axios from 'axios'
-import DATE from '@/utils/formatDate'
 import moment from 'moment'
+
 export const state = () => ({
   allPosts: [],
   news: [],
@@ -77,7 +77,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtClientInit({ commit, getters }, context) {
+  async nuxtClientInit({ commit, getters }) {
     const token = localStorage.getItem('token')
     if (getters.GET_USER) {
       await axios
@@ -106,6 +106,8 @@ export const actions = {
   },
 
   async LOG_IN({ commit }, user) {
+    console.log('user', user)
+
     return await axios
       .post('http://localhost:3000/api/auth/login', { ...user })
       .then(res => {
@@ -204,7 +206,6 @@ export const actions = {
   },
 
   async ALL_ARTICLES({ commit }, value) {
-    const sortBy = value
     return await axios
       .get('http://localhost:3000/api/content/all-articles')
       .then(res => {
@@ -231,23 +232,12 @@ export const actions = {
       })
   },
 
-  //* ?
-  // async GET_ALL_POSTS({ commit }) {
-  //   return await axios
-  //     .get('http://localhost:3000/api/content/category-articles')
-  //     .then(res => {
-  //       commit('SET_NEWS', res.data)
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // },
-
   async USER_POSTS({ commit }, user_id) {
     return await axios
       .get('http://localhost:3000/api/content/user-posts', { params: { user_id } })
       .then(posts => {
         commit('SET_USER_POSTS', posts.data)
+        return posts.data
       })
   },
 
@@ -326,8 +316,23 @@ export const actions = {
   },
 
   async CHANGE_SETTINGS({ commit, state }, user_info) {
+    console.log(state.user)
+
     return await axios
       .post('http://localhost:3000/api/user/change-settings', user_info, {
+        headers: {
+          Authorization: 'Bearer ' + state.token
+        }
+      })
+      .then(res => {
+        return res.data
+      })
+      .catch(err => console.log(err))
+  },
+
+  async CHANGE_PASSWORD({ commit, state }, user_info) {
+    return await axios
+      .post('http://localhost:3000/api/user/change-password', user_info, {
         headers: {
           Authorization: 'Bearer ' + state.token
         }
@@ -360,7 +365,7 @@ export const actions = {
       .then(result => {
         return result.data
       })
-      .catch(err => {})
+      .catch(err => { })
   },
 
   async ADD_LIKE({ commit, state }, params) {

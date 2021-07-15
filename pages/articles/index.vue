@@ -15,9 +15,7 @@
           <div class="wrapper">
             <div v-if="showBtn" class="btn-showmore" @click="showMore()">Show more</div>
             <nuxt-link v-else class="go_to" to="/news">
-              <div class="thats_all-text">
-                {{ thatsAllText }}
-              </div>
+              <div class="thats_all-text">For now that's all ! Go to News ?</div>
             </nuxt-link>
           </div>
         </b-col>
@@ -51,9 +49,8 @@ export default {
           'Copyright materials from the editor. Your opinion, your analytics, your forecasts. Collaboration with market experts.',
         image: require('~/static/img/img-layouts/namroud-gorguis.jpg')
       },
-      thatsAllText: `For now that's all ! Go to News ?`,
       pageNumber: 1,
-      size: 2,
+      size: 10,
       showBtn: true,
       isLoading: true,
       art: []
@@ -103,7 +100,7 @@ export default {
       if (value === 'Top') {
         this.currentSort = value
         arr.sort((a, b) => {
-          return b.likes_count - a.likes_count
+          return b.likes_count.count - a.likes_count.count
         })
       } else if (value === 'Most views') {
         this.currentSort = value

@@ -40,13 +40,10 @@ export default {
   components: { ContentList, Panel, Card },
   data() {
     return {
-      // user: {},
       data: [],
       news: [],
-      sortData: [],
       isLoading: true,
       content: [],
-      icons: null,
       sort: ['Recent', 'Most views', 'Top'],
       currentSort: 'Recent',
       page_info: {
@@ -56,7 +53,7 @@ export default {
         image: require('~/static/img/img-layouts/namroud-gorguis.jpg')
       },
       pageNumber: 1,
-      size: 2,
+      size: 10,
       isLoading: true,
       showBtn: true,
       news: []
@@ -65,9 +62,7 @@ export default {
   computed: {
     ...mapGetters(['GET_USER', 'GET_ALL_NEWS'])
   },
-  // TODO: if we dont have news we need to show btn, now if we dont have no one news we dont show btn
   mounted() {
-    // this.user = this.GET_USER
     this.$store.dispatch('ALL_NEWS').then(res => {
       if (res.length) {
         this.data = this.GET_ALL_NEWS
@@ -116,7 +111,7 @@ export default {
       if (value === 'Top') {
         this.currentSort = value
         arr.sort((a, b) => {
-          return b.likes_count - a.likes_count
+          return b.likes_count.count - a.likes_count.count
         })
       } else if (value === 'Most views') {
         this.currentSort = value
@@ -155,30 +150,5 @@ export default {
       this.news = foundPosts.slice(0, end)
     }
   }
-
-  // sortCategory(category) {
-  //   if (this.currentCategory !== category) {
-  //     this.pageNumber = 1
-  //     this.currentCategory = category
-  //   }
-  //   let news = null
-  //   if (category === 'All') {
-  //     this.paginatedData()
-  //   } else {
-  //     news = this.posts
-  //     const filtered = news.filter(post => post.category === category)
-  //     const end = this.pageNumber * this.size
-  //     this.news = filtered.slice(0, end)
-  //   }
-  // },
-  // sortStatus(status) {
-  //   let news
-  //   let sorted = []
-  //   if (status === 'Recent') {
-  //     this.data = this.$store.getters.GET_ALL_NEWS
-  //   } else {
-  //     news = this.$store.getters.GET_ALL_NEWS
-  //   }
-  // },
 }
 </script>

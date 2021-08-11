@@ -87,6 +87,7 @@ export const actions = {
           }
         })
         .then(res => {
+          console.log(res)
           commit('SET_LOGIN_STATE', true)
           commit('SET_USER', res.data)
         })
@@ -106,8 +107,6 @@ export const actions = {
   },
 
   async LOG_IN({ commit }, user) {
-    console.log('user', user)
-
     return await axios
       .post('http://localhost:3000/api/auth/login', { ...user })
       .then(res => {
@@ -405,6 +404,13 @@ export const actions = {
       .catch(err => {
         console.log(err)
       })
+  },
+
+  async FORGOT_PASSWORD() {
+    return await axios.get('http://localhost:3000/api/forgot/forgot-password')
+      .then(res => {
+        console.log(res)
+      }).catch(err => console.log(err))
   }
 }
 

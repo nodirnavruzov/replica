@@ -159,9 +159,6 @@ export default {
           })
           .then(res => {
             location.reload()
-            // this.data.title = ''
-            // this.editor.clear()
-            // window.scrollTo(0, 0)
           })
       } else {
         this.validTitle = false

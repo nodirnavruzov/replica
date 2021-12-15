@@ -172,7 +172,8 @@ export default {
         this.status = check_save
       }
       let content_like = await this.$store.dispatch('CONTENT_LIKES', ides.post_id)
-      this.likes = content_like.likes_count
+      
+      this.likes = content_like[0].likes_count
     },
     async savePost() {
       if (this.GET_LOGIN_STATE) {

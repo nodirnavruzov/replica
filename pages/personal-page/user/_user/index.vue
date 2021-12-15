@@ -6,6 +6,7 @@
 
 <script>
 import axios from 'axios'
+
 import Users from '@/components/User/Users'
 import createIcon from '~/utils/createIcon'
 
@@ -19,6 +20,7 @@ export default {
   },
 
   async asyncData(context) {
+    console.log('asyncData')
     let user_id = context.params.user.split('-')[1]
     let articles = await axios.get('http://localhost:3000/api/content/user-posts', {
       params: { user_id }

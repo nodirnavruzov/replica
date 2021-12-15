@@ -34,7 +34,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   //
-  modules: ['nuxt-client-init-module', 'bootstrap-vue/nuxt'],
+  modules: ['nuxt-client-init-module', 'bootstrap-vue/nuxt', '@nuxtjs/axios'],
   bootstrapVue: {
     components: [
       'b-button',
@@ -84,6 +84,15 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    proxy: true,
+
+  },
+
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:3000/api/',
+      pathRewrite: { '^/api/': '' },
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

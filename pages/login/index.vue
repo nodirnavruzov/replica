@@ -2,39 +2,50 @@
  <div class="wrapper-login">
 <div class="login-page">
       <transition name="fade">
-         <div v-if="!registerActive" class="wallpaper-login"></div>
+         <div v-if="registerActive === 'login'" class="wallpaper-login"></div>
       </transition>
       <div class="wallpaper-register"></div>
 
       <div class="container">
-         <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
-               <div v-if="!registerActive" class="card login" v-bind:class="{ error: emptyFields }">
-                  <h1>Sign In</h1>
-                  <form class="form-group">
-                     <input v-model="userLogin.email" type="email" class="form-control" placeholder="Email" required autocomplete="on">
-                     <input v-model="userLogin.password" type="password" class="form-control" placeholder="Password" required autocomplete="on">
-                     <input type="submit" class="btn btn-primary" @click.prevent="loginUser">
-                     <p>Don't have an account? <a href="#" @click="registerActive = !registerActive, emptyFields = false">Sign up here</a>
-                     </p>
-                  </form>
-               </div>
-
-               <div v-else class="card register" v-bind:class="{ error: emptyFields }">
-                  <h1>Sign Up</h1>
-                  <form class="form-group">
-                     <input v-model="userRegister.emailReg" type="email" :class="{'border-red' : errorValid}" class="form-control" placeholder="Email" required>
-                     <input v-model="userRegister.passwordReg" type="password" :class="{'border-red' : errorValid}" class="form-control" placeholder="Password" required>
-                     <input v-model="userRegister.confirmPasswordReg" type="password" class="form-control" placeholder="Confirm Password" required>
-                     <input v-model="userRegister.nameReg" type="text" :class="{'border-red' : errorValid}" class="form-control" placeholder="Name" required>
-                     <input v-model="userRegister.surnameReg" type="text" :class="{'border-red' : errorValid}" class="form-control" placeholder="Surname" required>
-                     <input type="submit" class="btn btn-primary" @click.prevent="register">
-                     <p>Already have an account? <a href="#" @click="registerActive = !registerActive, emptyFields = false">Sign in here</a>
-                     </p>
-                  </form>
-               </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
+            <div v-if="registerActive === 'login'" class="card login" v-bind:class="{ error: emptyFields }">
+              <h1>Sign In</h1>
+              <form class="form-group">
+                <input v-model="userLogin.email" type="email" class="form-control" placeholder="Email" required autocomplete="on">
+                <input v-model="userLogin.password" type="password" class="form-control" placeholder="Password" required autocomplete="on">
+                <button type="submit" class="btn btn-primary mb-3" @click.prevent="loginUser">Sign In</button>
+                <p>Don't have an account? <a href="#" @click="registerActive = 'register', emptyFields = false">Sign up here</a>
+                </p>
+                <p>Forgot password? <a href="#" @click="registerActive = 'forgot', emptyFields = false">Reset password</a>
+                </p>
+              </form>
             </div>
-         </div>
+            <div v-if="registerActive === 'register'" class="card register" v-bind:class="{ error: emptyFields }">
+              <h1>Sign Up</h1>
+              <form class="form-group">
+                <input v-model="userRegister.email" type="email" :class="{'border-red' : errorValid}" class="form-control" placeholder="Email" required>
+                <input v-model="userRegister.password" type="password" :class="{'border-red' : errorValid}" class="form-control" placeholder="Password" required>
+                <input v-model="userRegister.confirmPassword" type="password" class="form-control" placeholder="Confirm Password" required>
+                <input v-model="userRegister.name" type="text" :class="{'border-red' : errorValid}" class="form-control" placeholder="Name" required>
+                <input v-model="userRegister.surname" type="text" :class="{'border-red' : errorValid}" class="form-control" placeholder="Surname" required>
+                <input type="submit" class="btn btn-primary" @click.prevent="register">
+                <p>Already have an account? <a href="#" @click="registerActive = 'login', emptyFields = false">Sign in here</a>
+                </p>
+              </form>
+            </div>
+
+            <div v-if="registerActive === 'forgot'" class="card login" v-bind:class="{ error: emptyFields }">
+              <h1>Reset Password</h1>
+              <form class="form-group">
+                <input v-model="reset.email" type="email" class="form-control" placeholder="Email" required autocomplete="on">
+                <button type="submit" class="btn btn-primary mb-3" @click.prevent="sendKey">Send</button>
+                <p>Already have an account? <a href="#" @click="registerActive = 'login', emptyFields = false">Sign in here</a>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
    </div>
 
@@ -43,22 +54,32 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
+
+/*
+email: genesis@gmail.com
+password: 5731323123a 
+*/
 export default {
   data() {
     return {
-      registerActive: false,
+      registerActive: 'login',
       emptyFields: false,
       errorValid: false,
+      reset: {
+        email: ''
+      },
+      key: '',
       userLogin: {
         email: '',
         password: '',
       },
       userRegister: {
-        emailReg: '',
-        passwordReg: '',
-        confirmPasswordReg: '',
-        nameReg: '',
-        surnameReg: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        name: '',
+        surname: '',
       },
     }
   },
@@ -77,8 +98,21 @@ export default {
   },
 
   methods: {
-    loginUser() {
+    resetPassword() {
+      this.$store.dispatch('SUBMIT_CODE', this.key).then(res => {
+
+      })
+    },
+    sendKey() {
+      this.$store.dispatch('SEND_EMAIL_RESET', this.reset).then(res => {
+        // if (res.data.status) {
+        //   this.registerActive = 'key'
+        // }
+      })
+    },
+    async loginUser() {
       this.$store.dispatch('LOG_IN', this.userLogin).then(res => {
+        console.log('res login ', res)
         if (res.status) {
           this.$router.push('/news')
         } else {
@@ -91,8 +125,9 @@ export default {
     },
 
     async register() {
+      //  && this.validPassword() && this.validEmail()
       try {
-        if (this.validEmail() && this.validPassword() && this.comparePassword()) {
+        if (this.comparePassword()) {
          const result =  await this.$store.dispatch('REGISTER', this.userRegister)
           if (result.status === 201) {
             console.log('result', result)

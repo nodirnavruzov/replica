@@ -134,7 +134,7 @@ export default {
         name: '',
         surname: '',
         email: '',
-        current_password: null,
+        current_password: '',
         avatar: null
       },
       nameDisable: true,

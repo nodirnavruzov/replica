@@ -1,6 +1,6 @@
-import axios from 'axios'
 import moment from 'moment'
-
+const url = 'http://localhost:3000/'
+// const url = 'http://localhost:8080/'
 export const state = () => ({
   allPosts: [],
   news: [],
@@ -80,16 +80,15 @@ export const actions = {
   async nuxtClientInit({ commit, getters }) {
     const token = localStorage.getItem('token')
     if (getters.GET_USER) {
-      await axios
-        .get(`http://localhost:3000/api/user/get-user/${getters.GET_USER.id}`, {
+      await this.$axios
+        .$get(`/api/user/get-user/${getters.GET_USER.id}`, {
           headers: {
             Authorization: 'Bearer ' + token
           }
         })
         .then(res => {
-          console.log(res)
           commit('SET_LOGIN_STATE', true)
-          commit('SET_USER', res.data)
+          commit('SET_USER', res)
         })
         .catch(err => {
           console.log(err)
@@ -101,20 +100,19 @@ export const actions = {
   },
 
   async REGISTER({ commit }, user) {
-    return await axios.post('http://localhost:3000/api/auth/register', { ...user }).then(res => {
+    return await this.$axios.$post(`/api/auth/register`, { ...user }).then(res => {
       return res
     })
   },
 
   async LOG_IN({ commit }, user) {
-    return await axios
-      .post('http://localhost:3000/api/auth/login', { ...user })
+    return await this.$axios.$post(`/api/auth/login`, { ...user })
       .then(res => {
-        if (res.status === 200) {
-          localStorage.setItem('token', res.data.token)
-          localStorage.setItem('user', JSON.stringify(res.data.user[0]))
-          commit('SET_USER', res.data.user[0])
-          commit('SET_TOKEN', res.data.token)
+        if (res.status) {
+          localStorage.setItem('token', res.token)
+          localStorage.setItem('user', JSON.stringify(res.user[0]))
+          commit('SET_USER', res.user[0])
+          commit('SET_TOKEN', res.token)
           commit('SET_LOGIN_STATE', true)
           return { status: true }
         }
@@ -127,15 +125,14 @@ export const actions = {
 
   async UPDATE_USER({ commit, getters }) {
     const token = getters.GET_USER_TOKEN
-    return await axios
-      .get(`http://localhost:3000/api/user/upadated-user/${getters.GET_USER.id}`, {
+    return await this.$axios.$get(`/api/user/upadated-user/${getters.GET_USER.id}`, {
         headers: {
           Authorization: 'Bearer ' + token
         }
       })
       .then(res => {
-        commit('SET_USER', res.data[0])
-        return res.data[0]
+        commit('SET_USER', res[0])
+        return res[0]
       })
   },
 
@@ -150,15 +147,14 @@ export const actions = {
   // Send Content to DB
   async SEND_CONTENT({ commit, state }, post) {
     let token = state.token
-    return await axios
-      .post('http://localhost:3000/api/content/add-posts', post, {
+    return await this.$axios.$post(`/api/content/add-posts`, post, {
         headers: {
           Authorization: 'Bearer ' + token
         }
       })
       .then(res => {
-        if (res.data.status) {
-          const u = res.data.user[0]
+        if (res.status) {
+          const u = res.user[0]
           localStorage.setItem('user', JSON.stringify(u))
           return true
         }
@@ -169,7 +165,7 @@ export const actions = {
   // Not used
   // async ALL_POSTS({ commit }) {
   //   return await axios
-  //     .get('http://localhost:3000/api/content/all-posts')
+  //     .get('/api/content/all-posts')
   //     .then(res => {
   //       commit('SET_ALL_POSTS', res.data)
   //     })
@@ -179,11 +175,10 @@ export const actions = {
   // },
 
   async ALL_NEWS({ commit }) {
-    return await axios
-      .get('http://localhost:3000/api/content/all-news')
+    return await this.$axios.$get(`/api/content/all-news`)
       .then(res => {
         const allNews = []
-        for (const iterator of res.data) {
+        for (const iterator of res) {
           const element = iterator
           let dateNow = moment(new Date(), 'DD-MM-YYYY HH:mm')
           let postDate = moment(element.date, 'DD-MM-YYYY HH:mm')
@@ -205,12 +200,10 @@ export const actions = {
   },
 
   async ALL_ARTICLES({ commit }, value) {
-    return await axios
-      .get('http://localhost:3000/api/content/all-articles')
+    return await this.$axios.$get(`/api/content/all-articles`)
       .then(res => {
         const allArticles = []
-        console.log('all-articles', res)
-        for (const iterator of res.data) {
+        for (const iterator of res) {
           const element = iterator
           let dateNow = moment(new Date(), 'DD-MM-YYYY HH:mm')
           let postDate = moment(element.date, 'DD-MM-YYYY HH:mm')
@@ -232,11 +225,10 @@ export const actions = {
   },
 
   async USER_POSTS({ commit }, user_id) {
-    return await axios
-      .get('http://localhost:3000/api/content/user-posts', { params: { user_id } })
+    return await this.$axios.$get(`/api/content/user-posts`, { params: { user_id } })
       .then(posts => {
-        commit('SET_USER_POSTS', posts.data)
-        return posts.data
+        commit('SET_USER_POSTS', posts)
+        return posts
       })
   },
 
@@ -250,8 +242,7 @@ export const actions = {
 
   async CHECK_USER({ commit }, id) {
     const token = localStorage.getItem('token')
-    return await axios
-      .get(`http://localhost:3000/api/user/get-user/${id}`, {
+    return await this.$axios.$get(`/api/user/get-user/${id}`, {
         headers: {
           Authorization: 'Bearer ' + token
         }
@@ -267,21 +258,18 @@ export const actions = {
   },
 
   async SAVE_POST({ commit, state }, ides) {
-    return await axios
-      .post('http://localhost:3000/api/content/save-post', ides, {
+    return await this.$axios.$post(`/api/content/save-post`, ides, {
         headers: {
           Authorization: 'Bearer ' + state.token
         }
       })
       .then(res => {
-        if (res.status === 200) {
-          if (res.data.message === 'deleted') {
-            commit('REMOVE_SAVED_POST', res.data.post_id)
-            return res.data
-          } else if (res.data.message === 'added') {
-            commit('SET_SAVE_POST', res.data.post_id)
-            return res.data
-          }
+        if (res.message === 'deleted') {
+          commit('REMOVE_SAVED_POST', res.post_id)
+          return res
+        } else if (res.message === 'added') {
+          commit('SET_SAVE_POST', res.post_id)
+          return res
         }
       })
       .catch(err => {
@@ -290,11 +278,10 @@ export const actions = {
   },
 
   async SAVED_POSTS({ commit }, user_id) {
-    return await axios
-      .get('http://localhost:3000/api/content/user-bookmark', { params: { user_id } })
+    return await this.$axios.$get(`/api/content/user-bookmark`, { params: { user_id } })
       .then(res => {
-        commit('SET_USER_SAVED_POSTS', res.data)
-        return res.data
+        commit('SET_USER_SAVED_POSTS', res)
+        return res
       })
       .catch(err => {
         console.log(err)
@@ -302,10 +289,9 @@ export const actions = {
   },
 
   async CHECK_SAVED_POSTS({ commit }, ides) {
-    return await axios
-      .post('http://localhost:3000/api/content/check-saved-posts', ides)
+    return await this.$axios.$post(`/api/content/check-saved-posts`, ides)
       .then(res => {
-        return res.data.status
+        return res.status
       })
       .catch(err => console.log(err))
   },
@@ -315,36 +301,31 @@ export const actions = {
   },
 
   async CHANGE_SETTINGS({ commit, state }, user_info) {
-    console.log(state.user)
-
-    return await axios
-      .post('http://localhost:3000/api/user/change-settings', user_info, {
+    return await this.$axios.$post(`/api/user/change-settings`, user_info, {
         headers: {
           Authorization: 'Bearer ' + state.token
         }
       })
       .then(res => {
-        return res.data
+        return res
       })
       .catch(err => console.log(err))
   },
 
   async CHANGE_PASSWORD({ commit, state }, user_info) {
-    return await axios
-      .post('http://localhost:3000/api/user/change-password', user_info, {
+    return await this.$axios.$post(`/api/user/change-password`, user_info, {
         headers: {
           Authorization: 'Bearer ' + state.token
         }
       })
       .then(res => {
-        return res.data
+        return res
       })
       .catch(err => console.log(err))
   },
 
   async UPLOAD_AVATAR({ commit, getters }, file) {
-    return await axios
-      .post('http://localhost:3000/api/user/upload-avatar', file, {
+    return await this.$axios.$post(`/api/user/upload-avatar`, file, {
         headers: {
           Authorization: 'Bearer ' + getters.GET_USER_TOKEN,
           'Content-Type': 'multipart/form-data'
@@ -357,61 +338,61 @@ export const actions = {
   },
 
   async REMOVE_AVATAR({ commit }, user) {
-    return await axios
-      .delete('http://localhost:3000/api/user/remove-avatar', {
+    return await this.$axios
+      .$delete(`/api/user/remove-avatar`, {
         params: { id: user.id }
       })
       .then(result => {
-        return result.data
+        return result
       })
-      .catch(err => { })
+      .catch(err => { console.log('Error', err)
+      })
   },
 
   async ADD_LIKE({ commit, state }, params) {
-    console.log('params', params)
-    return await axios
-      .patch('http://localhost:3000/api/content/content-like', params, {
+    return await this.$axios
+      .$patch(`/api/content/content-like`, params, {
         headers: {
           Authorization: 'Bearer ' + state.token
         }
       })
-      .then(result => {
-        // console.log('result', result)
-      })
+      .then(result => {})
       .catch(err => {
         console.log(err)
       })
   },
 
   async CONTENT_LIKES({ commit, state }, post_id) {
-    return await axios
-      .get('http://localhost:3000/api/content/get-content-likes-count', { params: { post_id } })
+    
+    return await this.$axios.$get(`/api/content/get-content-likes-count`, { params: { post_id } })
       .then(result => {
-        return result.data[0]
+        return result
       })
       .catch(err => {
         console.log(err)
       })
   },
   async USER_LIKES({ commit, state }, params) {
-    return await axios
-      .get('http://localhost:3000/api/content/get_user_likes', {
+    return await this.$axios.$get(`/api/content/get_user_likes`, {
         params: { user_id: params.user_id, post_id: params.post_id }
       })
       .then(result => {
-        return result.data
+        return result
       })
       .catch(err => {
         console.log(err)
       })
   },
 
-  async FORGOT_PASSWORD() {
-    return await axios.get('http://localhost:3000/api/forgot/forgot-password')
-      .then(res => {
-        console.log(res)
-      }).catch(err => console.log(err))
-  }
+  async RESET_PASSWORD({ commit, state }, user) {
+    return await this.$axios.$post(`/api/auth/reset-password`, user)
+    .then(res => {
+      return res
+    }).catch(err => {
+      console.error(err)
+      return false
+    })
+  },
 }
 
 export const getters = {

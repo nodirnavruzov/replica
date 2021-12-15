@@ -5,10 +5,11 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Content from '@/components/Content/Content'
 import moment from 'moment'
-import axios from 'axios'
 import createIcon from '~/utils/createIcon'
+
 
 export default {
   components: { Content },

@@ -157,7 +157,8 @@ export default {
         }
         let check_save = await this.$store.dispatch('CHECK_SAVED_POSTS', ides)
         let content_likes = await this.$store.dispatch('CONTENT_LIKES', ides.post_id)
-        this.likes = content_likes.likes_count
+        
+        this.likes = content_likes[0].likes_count
 
         this.status = check_save
       }

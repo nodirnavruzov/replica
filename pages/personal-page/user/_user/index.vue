@@ -22,10 +22,10 @@ export default {
   async asyncData(context) {
     console.log('asyncData')
     let user_id = context.params.user.split('-')[1]
-    let articles = await axios.get('http://localhost:3000/api/content/user-posts', {
+    let articles = await axios.get('/api/content/user-posts', {
       params: { user_id }
     })
-    let response = await axios.get(`http://localhost:3000/api/user/get-user/${user_id}`, {
+    let response = await axios.get(`/api/user/get-user/${user_id}`, {
       headers: {
         'Content-Type': 'application/json'
       }

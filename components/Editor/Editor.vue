@@ -237,7 +237,7 @@ export default {
           class: ImageTool,
           config: {
             endpoints: {
-              byFile: 'http://localhost:3000/api/upload/upload-image' // Your backend file uploader endpoint
+              byFile: '/api/upload/upload-image' // Your backend file uploader endpoint
             }
           }
         },
@@ -278,7 +278,7 @@ export default {
         linkTool: {
           class: LinkTool,
           config: {
-            endpoint: 'http://localhost:3000/api/upload/content-link' // Your backend endpoint for url data fetching
+            endpoint: '/api/upload/content-link' // Your backend endpoint for url data fetching
           }
         }
       }

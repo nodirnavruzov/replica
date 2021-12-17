@@ -178,6 +178,8 @@ export default {
     }
   },
   mounted() {
+    console.log('content', this.content)
+    
     this.user_likes()
     this.getCheck()
   }

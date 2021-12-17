@@ -14,7 +14,7 @@ import createIcon from '~/utils/createIcon'
 export default {
   components: { Content },
   async asyncData({ params }) {
-    let response = await axios.get(`http://localhost:3000/api/content/get-post/${params.id}`, {
+    let response = await axios.get(`/api/content/get-post/${params.id}`, {
       headers: {
         'Content-Type': 'application/json'
       }

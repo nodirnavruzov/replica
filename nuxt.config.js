@@ -90,7 +90,8 @@ export default {
 
   proxy: {
     '/api/': {
-      target: 'http://localhost:3000/api/',
+      target: 'http://192.168.43.92:3000/api/',
+      // target: 'http://localhost:3000/api/',
       pathRewrite: { '^/api/': '' },
     },
   },
@@ -104,6 +105,7 @@ export default {
   },
 
   server: {
+    host: '0.0.0.0',
     port: 8080, // default: 3000
     timing: false
   }

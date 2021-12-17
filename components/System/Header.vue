@@ -21,7 +21,7 @@
           ></b-avatar>
           <div class="login" v-if="GET_LOGIN_STATE">
             <dropdown :show="status" />
-            <span class="name">{{ GET_USER.name }}</span>
+            <span class="name">{{ GET_USER.firstname }}</span>
           </div>
           <div v-else class="login">
             <nuxt-link class="link link-login" to="/login">

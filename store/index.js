@@ -12,6 +12,7 @@ export const state = () => ({
   token: localStorage.getItem('token') || null,
   user: localStorage.getItem('user') || null,
   auth_state: false,
+  verify_state: false,
   selected_category: null,
   user_articles_or_bookmark: null
 })
@@ -43,6 +44,9 @@ export const mutations = {
     if (!auth_state) {
       state.user = null
     }
+  },
+  set_verify_state(state, verify) {
+    state.verify_state = verify
   },
   SET_TOKEN(state, token) {
     state.token = token
@@ -77,11 +81,14 @@ export const mutations = {
 }
 
 export const actions = {
+  // need refactor
   async nuxtClientInit({ commit, getters }) {
+    console.log('nuxtClientInit', getters.GET_USER)
+    const userId = getters.GET_USER?.id
     const token = localStorage.getItem('token')
     if (getters.GET_USER) {
       await this.$axios
-        .$get(`/api/user/get-user/${getters.GET_USER.id}`, {
+        .$get(`/api/user/get-user/${userId}`, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -101,21 +108,30 @@ export const actions = {
 
   async REGISTER({ commit }, user) {
     return await this.$axios.$post(`/api/auth/register`, { ...user }).then(res => {
+      console.log('res', res)
       return res
-    })
+    }).catch(err => console.log('error', err)
+    )
   },
 
   async LOG_IN({ commit }, user) {
     return await this.$axios.$post(`/api/auth/login`, { ...user })
       .then(res => {
-        if (res.status) {
+        console.log('login =>', res)
+
+        if (res.status && res.verify) {
           localStorage.setItem('token', res.token)
-          localStorage.setItem('user', JSON.stringify(res.user[0]))
-          commit('SET_USER', res.user[0])
+          localStorage.setItem('user', JSON.stringify(res.user))
+          commit('SET_USER', res.user)
           commit('SET_TOKEN', res.token)
           commit('SET_LOGIN_STATE', true)
-          return { status: true }
+          commit('set_verify_state', true)
+        } else if (!res.verify && res.status) {
+          commit('set_verify_state', false)
+        } else if (!res.status) {
+          commit('SET_LOGIN_STATE', false)
         }
+        return res
       })
       .catch(err => {
         commit('SET_LOGIN_STATE', false)
@@ -384,13 +400,21 @@ export const actions = {
       })
   },
 
-  async RESET_PASSWORD({ commit, state }, user) {
-    return await this.$axios.$post(`/api/auth/reset-password`, user)
-    .then(res => {
+  async sendResetEmail({ commit, state }, params) {
+    return await this.$axios.$post('/api/auth/send-reset-email', params)
+  },
+
+  async resetPassword({ commit, state }, form) {
+    return await this.$axios.$post('/api/auth/reset-password', form)
+  },
+
+  async sendVerifyEmail({ commit, state }, form) {
+    return await this.$axios.$post('/api/auth/send-verify-email', form)
+  },
+  
+  async verifyCode({ commit }, form) {
+    return await this.$axios.$post(`/api/auth/verify-code`, { ...form }).then(res => {
       return res
-    }).catch(err => {
-      console.error(err)
-      return false
     })
   },
 }
@@ -440,5 +464,8 @@ export const getters = {
   },
   GET_LOADING(state) {
     return state.loading
+  },
+  getVerifyState(state) {
+    return state.verify_state
   }
 }

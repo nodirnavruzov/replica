@@ -22,7 +22,7 @@
           <b-col md="10">
             <b-row class="my-1">
               <b-col class="col" md="4">
-                <label class="label label-name" for="input-name">Name:</label>
+                <label class="label label-name" for="input-name">First name:</label>
               </b-col>
               <b-col md="7">
                 <b-form-input
@@ -39,7 +39,7 @@
             </b-row>
             <b-row class="my-1">
               <b-col class="col" md="4">
-                <label class="label label-surname" for="input-surname">Surname:</label>
+                <label class="label label-surname" for="input-surname">Last name:</label>
               </b-col>
               <b-col md="7">
                 <b-form-input

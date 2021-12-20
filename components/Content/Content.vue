@@ -17,7 +17,7 @@
                     :src="content.avatar ? content.avatar : ''"
                   ></b-avatar>
                   <nuxt-link class="link_no-hover content_user-name" :to="userLink">
-                    {{ content.name }} {{ content.surname }}</nuxt-link
+                    {{ content.author.firstname }} {{ content.author.lastname }}</nuxt-link
                   >
                 </nuxt-link>
               </div>
@@ -93,7 +93,7 @@ export default {
   },
   computed: {
     userLink() {
-      return `/personal-page/user/${this.content.name}-${this.content.user_id}`
+      return `/personal-page/user/${this.content.author.firstname }-${this.content.user_id}`
     },
     ...mapGetters(['GET_USER', 'GET_LOGIN_STATE', 'GET_SAVED_POSTS_IDES'])
   },

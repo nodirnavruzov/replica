@@ -11,7 +11,7 @@
         </b-avatar>
       </b-col>
       <b-col md="5" class="col_user-info">
-        <h2 class="user_name">{{ userInfo.name }} {{ userInfo.surname }}</h2>
+        <h2 class="user_name">{{ userInfo.firstname }} {{ userInfo.lastname }}</h2>
         <div class="registered mt-2">
           <p class="registered_title">On Project</p>
           &#9679;

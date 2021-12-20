@@ -10,7 +10,7 @@
             size="35"
             :src="content.avatar ? content.avatar : ''"
           ></b-avatar>
-          <p class="newsPreview__info author">{{ content.name }} {{ content.surname }}</p>
+          <p class="newsPreview__info author">{{ content.author.firstname }} {{ content.author.lastname }}</p>
         </nuxt-link>
       </div>
       <div class="news__preview-header-right">

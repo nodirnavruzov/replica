@@ -49,6 +49,8 @@ export default {
       data.date = relativeTime
       return { data }
     }
+    console.log('data', data)
+    
     return { data }
   },
   mounted() {

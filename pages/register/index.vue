@@ -7,7 +7,7 @@ export default {
   methods: {
     onSubmit (form) {
       try {
-        this.$store.dispatch('REGISTER', form).then(res => {
+        this.$store.dispatch('register', form).then(res => {
           if (res.status) {
             this.$router.push('/verify')
           } else {

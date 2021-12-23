@@ -14,14 +14,14 @@
       <div class="link link_no-hover" @click="statusChange">
         <div class="header-user-login">
           <b-avatar
-            v-if="GET_LOGIN_STATE"
+            v-if="getLoginState"
             class="header-avatar"
             size="35"
-            :src="GET_USER.avatar ? GET_USER.avatar : ''"
+            :src="getUser.avatar ? getUser.avatar : ''"
           ></b-avatar>
-          <div class="login" v-if="GET_LOGIN_STATE">
+          <div class="login" v-if="getLoginState">
             <dropdown :show="status" />
-            <span class="name">{{ GET_USER.firstname }}</span>
+            <span class="name">{{ getUser.firstname }}</span>
           </div>
           <div v-else class="login">
             <nuxt-link class="link link-login" to="/login">
@@ -48,11 +48,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['GET_LOGIN_STATE', 'GET_USER'])
+    ...mapGetters(['getLoginState', 'getUser'])
   },
   methods: {
     statusChange() {
-      if (this.GET_LOGIN_STATE) {
+      if (this.getLoginState) {
         this.status = !this.status
         console.log(this.status)
       }

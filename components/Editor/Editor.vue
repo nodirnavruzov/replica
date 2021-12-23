@@ -146,7 +146,7 @@ export default {
                 break
               }
             }
-            let user = this.$store.getters.GET_USER
+            let user = this.$store.getters.getUser
             this.data.user_id = user.id
             this.data.jsonData = data
             this.data.date = formatDate.formatDate(data.time)
@@ -155,7 +155,7 @@ export default {
           })
           .then(() => {
             this.data.post = this.articleHTML
-            return this.$store.dispatch('SEND_CONTENT', this.data)
+            return this.$store.dispatch('sendContent', this.data)
           })
           .then(res => {
             location.reload()

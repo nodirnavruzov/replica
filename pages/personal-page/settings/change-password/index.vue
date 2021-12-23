@@ -90,7 +90,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['GET_USER']),
+    ...mapGetters(['getUser']),
     validPassword() {
       if (this.user.currentPassword && this.user.newPassword.length > 6) {
         return true
@@ -109,11 +109,11 @@ export default {
       this.validationPassword = this.validPassword
       if (this.validPassword && this.user.newPassword) { 
         const userForm = {
-          id: this.GET_USER.id,
+          id: this.getUser.id,
           current_password: this.user.currentPassword,
           new_password: this.user.newPassword
         }
-        this.$store.dispatch('CHANGE_PASSWORD', { userForm }).then(res => {
+        this.$store.dispatch('changePassword', { userForm }).then(res => {
           this.showAlert(res.message)
           if (res.status) {
           }

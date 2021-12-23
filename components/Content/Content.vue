@@ -95,7 +95,7 @@ export default {
     userLink() {
       return `/personal-page/user/${this.content.author.firstname }-${this.content.user_id}`
     },
-    ...mapGetters(['GET_USER', 'GET_LOGIN_STATE', 'GET_SAVED_POSTS_IDES'])
+    ...mapGetters(['getUser', 'getLoginState', 'getSavedPostsIdes'])
   },
   methods: {
     showModal() {
@@ -108,11 +108,11 @@ export default {
       this.$router.push('/login')
     },
     async user_likes() {
-      if (!this.GET_LOGIN_STATE) return
+      if (!this.getLoginState) return
       await this.$store
-        .dispatch('USER_LIKES', {
+        .dispatch('userLikes', {
           post_id: this.content.id,
-          user_id: this.GET_USER.id
+          user_id: this.getUser.id
         })
         .then(response => {
           if (response.status == null) {
@@ -128,21 +128,21 @@ export default {
         })
     },
     async vote(eventName) {
-      if (!this.GET_LOGIN_STATE) {
+      if (!this.getLoginState) {
         this.modalText = 'To vote you need to log into your account!'
         this.showModal()
         return
       }
       if (eventName == 'like') {
-        await this.$store.dispatch('ADD_LIKE', {
+        await this.$store.dispatch('addLike', {
           post_id: this.content.id,
-          user_id: this.GET_USER.id,
+          user_id: this.getUser.id,
           value: 'like'
         })
       } else if (eventName == 'dislike') {
-        await this.$store.dispatch('ADD_LIKE', {
+        await this.$store.dispatch('addLike', {
           post_id: this.content.id,
-          user_id: this.GET_USER.id,
+          user_id: this.getUser.id,
           value: 'dislike'
         })
       }
@@ -150,13 +150,13 @@ export default {
       this.getCheck()
     },
     async getCheck() {
-      if (this.GET_USER) {
+      if (this.getUser) {
         const ides = {
           post_id: this.content.id,
-          user_id: this.GET_USER.id
+          user_id: this.getUser.id
         }
-        let check_save = await this.$store.dispatch('CHECK_SAVED_POSTS', ides)
-        let content_likes = await this.$store.dispatch('CONTENT_LIKES', ides.post_id)
+        let check_save = await this.$store.dispatch('checkSavedPosts', ides)
+        let content_likes = await this.$store.dispatch('contentLikes', ides.post_id)
         
         this.likes = content_likes[0].likes_count
 
@@ -164,12 +164,12 @@ export default {
       }
     },
     async savePost() {
-      if (this.GET_LOGIN_STATE) {
+      if (this.getLoginState) {
         const ides = {
           post_id: this.content.id,
-          user_id: this.GET_USER.id
+          user_id: this.getUser.id
         }
-        const res = await this.$store.dispatch('SAVE_POST', ides)
+        const res = await this.$store.dispatch('savePost', ides)
         this.getCheck()
       } else {
         this.modalText = 'To save you need to login!'

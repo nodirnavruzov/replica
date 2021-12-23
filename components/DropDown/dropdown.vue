@@ -80,21 +80,21 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters(['GET_LOGIN_STATE', 'GET_USER'])
+    ...mapGetters(['getLoginState', 'getUser'])
   },
   mounted() {
-    this.userStatus = this.GET_LOGIN_STATE
+    this.userStatus = this.getLoginState
   },
   methods: {
     goTo(event_name) {
       if (event_name === 'account') {
         this.$router.push('/personal-page')
       }
-      this.$store.dispatch('USER_ARTICLES_OR_BOOKMARK', event_name)
+      this.$store.dispatch('userArticlesOrBookmark', event_name)
       this.$router.push('/personal-page')
     },
     logOut() {
-      this.$store.dispatch('LOGIN_STATE', false)
+      this.$store.dispatch('loginState', false)
       localStorage.removeItem('user')
       localStorage.removeItem('token')
     }

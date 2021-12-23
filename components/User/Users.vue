@@ -51,8 +51,8 @@ export default {
   props: ['user', 'content'],
   data() {
     return {
-      name: '',
-      surname: '',
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
       none: '',

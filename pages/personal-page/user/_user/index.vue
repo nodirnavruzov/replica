@@ -63,7 +63,7 @@ export default {
     return { user, articles }
   },
   mounted() {
-    this.$store.dispatch('LOADING', false)
+    this.$store.dispatch('loading', false)
   }
 }
 </script>

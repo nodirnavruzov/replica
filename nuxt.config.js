@@ -34,7 +34,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   //
-  modules: ['nuxt-client-init-module', 'bootstrap-vue/nuxt', '@nuxtjs/axios'],
+  modules: ['nuxt-client-init-module', 'bootstrap-vue/nuxt', '@nuxtjs/axios', ['@nuxtjs/dotenv', { filename: '.env' }]],
   bootstrapVue: {
     components: [
       'b-button',
@@ -81,6 +81,9 @@ export default {
     ]
   },
 
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
@@ -90,7 +93,7 @@ export default {
 
   proxy: {
     '/api/': {
-      target: 'http://192.168.43.92:3000/api/',
+      target: process.env.API_URL + '/api/',
       // target: 'http://localhost:3000/api/',
       pathRewrite: { '^/api/': '' },
     },

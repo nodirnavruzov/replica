@@ -17,7 +17,7 @@
 <script>
 export default {
   mounted() {
-    this.$store.dispatch('LOADING', false)
+    this.$store.dispatch('loading', false)
   }
 }
 </script>

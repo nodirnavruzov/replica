@@ -18,28 +18,28 @@ export const state = () => ({
 })
 
 export const mutations = {
-  SET_ALL_POSTS(state, posts) {
+  setAllPosts(state, posts) {
     state.allPosts = posts
   },
-  SET_NEWS(state, news) {
+  setNews(state, news) {
     state.news = news
   },
-  SET_ARTICLES(state, articles) {
+  setArticles(state, articles) {
     state.articles = articles
   },
-  SET_USER_POSTS(state, posts) {
+  setUserPosts(state, posts) {
     state.user_posts = posts
   },
-  SET_USER(state, user) {
+  setUser(state, user) {
     const currUser = user
     const formatedDate = currUser.registration_date.slice(0, 10)
     user.registration_date = formatedDate
     state.user = user
   },
-  SET_LOADING(state, status) {
+  setLoading(state, status) {
     state.loading = status
   },
-  SET_LOGIN_STATE(state, auth_state) {
+  setLoginState(state, auth_state) {
     state.auth_state = auth_state
     if (!auth_state) {
       state.user = null
@@ -48,13 +48,13 @@ export const mutations = {
   set_verify_state(state, verify) {
     state.verify_state = verify
   },
-  SET_TOKEN(state, token) {
+  setToken(state, token) {
     state.token = token
   },
-  SET_SELECTED_CATEGORY(state, category) {
+  setSelectedCategory(state, category) {
     state.selected_category = category
   },
-  SET_SORT_CATEGORY(state, category) {
+  setSortCategory(state, category) {
     const sorted = state.articles.filter(article => {
       return article.category === category
     })
@@ -62,20 +62,20 @@ export const mutations = {
     console.log(state.article)
   },
 
-  SET_USER_SAVED_POSTS(state, posts) {
+  setUserSavedPosts(state, posts) {
     state.saved_posts = posts
   },
 
-  SET_SAVE_POST(state, id) {
+  setSavePost(state, id) {
     state.saved_posts_id.push(id)
   },
 
-  REMOVE_SAVED_POST(state, id) {
+  removeSavedPost(state, id) {
     const post_id = state.saved_posts_id
     state.saved_posts_id = post_id.filter(post_id => post_id != id)
   },
 
-  SET_STATE_USER_ARTICLES_OR_BOOKMARK(state, event_name) {
+  setStateUserArticlesOrBookmark(state, event_name) {
     state.user_articles_or_bookmark = event_name
   }
 }
@@ -83,10 +83,10 @@ export const mutations = {
 export const actions = {
   // need refactor
   async nuxtClientInit({ commit, getters }) {
-    console.log('nuxtClientInit', getters.GET_USER)
-    const userId = getters.GET_USER?.id
+    console.log('nuxtClientInit', getters.getUser)
+    const userId = getters.getUser?.id
     const token = localStorage.getItem('token')
-    if (getters.GET_USER) {
+    if (getters.getUser) {
       await this.$axios
         .$get(`/api/user/get-user/${userId}`, {
           headers: {
@@ -94,19 +94,19 @@ export const actions = {
           }
         })
         .then(res => {
-          commit('SET_LOGIN_STATE', true)
-          commit('SET_USER', res)
+          commit('setLoginState', true)
+          commit('setUser', res)
         })
         .catch(err => {
-          console.log(err)
-          commit('SET_LOGIN_STATE', false)
+          console.error(err)
+          commit('setLoginState', false)
         })
     } else {
-      commit('SET_LOGIN_STATE', false)
+      commit('setLoginState', false)
     }
   },
 
-  async REGISTER({ commit }, user) {
+  async register({ commit }, user) {
     return await this.$axios.$post(`/api/auth/register`, { ...user }).then(res => {
       console.log('res', res)
       return res
@@ -114,7 +114,7 @@ export const actions = {
     )
   },
 
-  async LOG_IN({ commit }, user) {
+  async login({ commit }, user) {
     return await this.$axios.$post(`/api/auth/login`, { ...user })
       .then(res => {
         console.log('login =>', res)
@@ -122,46 +122,46 @@ export const actions = {
         if (res.status && res.verify) {
           localStorage.setItem('token', res.token)
           localStorage.setItem('user', JSON.stringify(res.user))
-          commit('SET_USER', res.user)
-          commit('SET_TOKEN', res.token)
-          commit('SET_LOGIN_STATE', true)
+          commit('setUser', res.user)
+          commit('setToken', res.token)
+          commit('setLoginState', true)
           commit('set_verify_state', true)
         } else if (!res.verify && res.status) {
           commit('set_verify_state', false)
         } else if (!res.status) {
-          commit('SET_LOGIN_STATE', false)
+          commit('setLoginState', false)
         }
         return res
       })
       .catch(err => {
-        commit('SET_LOGIN_STATE', false)
+        commit('setLoginState', false)
         return { status: false, message: 'Password or email is wrong, try again' }
       })
   },
 
-  async UPDATE_USER({ commit, getters }) {
-    const token = getters.GET_USER_TOKEN
-    return await this.$axios.$get(`/api/user/upadated-user/${getters.GET_USER.id}`, {
+  async updateUser({ commit, getters }) {
+    const token = getters.getUserToken
+    return await this.$axios.$get(`/api/user/upadated-user/${getters.getUser.id}`, {
         headers: {
           Authorization: 'Bearer ' + token
         }
       })
       .then(res => {
-        commit('SET_USER', res[0])
+        commit('setUser', res[0])
         return res[0]
       })
   },
 
-  LOGIN_STATE({ commit }, auth_state) {
-    commit('SET_LOGIN_STATE', auth_state)
+  loginState({ commit }, auth_state) {
+    commit('setLoginState', auth_state)
   },
 
-  LOADING({ commit }, status) {
-    commit('SET_LOADING', status)
+  loading({ commit }, status) {
+    commit('setLoading', status)
   },
 
   // Send Content to DB
-  async SEND_CONTENT({ commit, state }, post) {
+  async sendContent({ commit, state }, post) {
     let token = state.token
     return await this.$axios.$post(`/api/content/add-posts`, post, {
         headers: {
@@ -183,14 +183,14 @@ export const actions = {
   //   return await axios
   //     .get('/api/content/all-posts')
   //     .then(res => {
-  //       commit('SET_ALL_POSTS', res.data)
+  //       commit('setAllPosts', res.data)
   //     })
   //     .catch(err => {
   //       console.log(err)
   //     })
   // },
 
-  async ALL_NEWS({ commit }) {
+  async allNews({ commit }) {
     return await this.$axios.$get(`/api/content/all-news`)
       .then(res => {
         const allNews = []
@@ -207,7 +207,7 @@ export const actions = {
             allNews.push(element)
           }
         }
-        commit('SET_NEWS', allNews)
+        commit('setNews', allNews)
         return allNews
       })
       .catch(err => {
@@ -215,7 +215,7 @@ export const actions = {
       })
   },
 
-  async ALL_ARTICLES({ commit }, value) {
+  async allArticles({ commit }, value) {
     return await this.$axios.$get(`/api/content/all-articles`)
       .then(res => {
         const allArticles = []
@@ -232,7 +232,7 @@ export const actions = {
             allArticles.push(element)
           }
         }
-        commit('SET_ARTICLES', allArticles)
+        commit('setArticles', allArticles)
         return allArticles
       })
       .catch(err => {
@@ -240,23 +240,23 @@ export const actions = {
       })
   },
 
-  async USER_POSTS({ commit }, user_id) {
+  async userPosts({ commit }, user_id) {
     return await this.$axios.$get(`/api/content/user-posts`, { params: { user_id } })
       .then(posts => {
-        commit('SET_USER_POSTS', posts)
+        commit('setUserPosts', posts)
         return posts
       })
   },
 
-  SELECTED_CATEGORY({ commit }, category) {
-    commit('SET_SELECTED_CATEGORY', category)
+  selectedCategory({ commit }, category) {
+    commit('setSelectedCategory', category)
   },
 
-  SORT_CATEGORY({ commit }, category) {
-    commit('SET_SORT_CATEGORY', category)
+  sortCategory({ commit }, category) {
+    commit('setSortCategory', category)
   },
 
-  async CHECK_USER({ commit }, id) {
+  async checkUser({ commit }, id) {
     const token = localStorage.getItem('token')
     return await this.$axios.$get(`/api/user/get-user/${id}`, {
         headers: {
@@ -264,16 +264,16 @@ export const actions = {
         }
       })
       .then(res => {
-        commit('SET_LOGIN_STATE', true)
+        commit('setLoginState', true)
         return true
       })
       .catch(err => {
-        commit('SET_LOGIN_STATE', false)
+        commit('setLoginState', false)
         return false
       })
   },
 
-  async SAVE_POST({ commit, state }, ides) {
+  async savePost({ commit, state }, ides) {
     return await this.$axios.$post(`/api/content/save-post`, ides, {
         headers: {
           Authorization: 'Bearer ' + state.token
@@ -281,10 +281,10 @@ export const actions = {
       })
       .then(res => {
         if (res.message === 'deleted') {
-          commit('REMOVE_SAVED_POST', res.post_id)
+          commit('removeSavedPost', res.post_id)
           return res
         } else if (res.message === 'added') {
-          commit('SET_SAVE_POST', res.post_id)
+          commit('setSavePost', res.post_id)
           return res
         }
       })
@@ -293,10 +293,10 @@ export const actions = {
       })
   },
 
-  async SAVED_POSTS({ commit }, user_id) {
+  async savedPosts({ commit }, user_id) {
     return await this.$axios.$get(`/api/content/user-bookmark`, { params: { user_id } })
       .then(res => {
-        commit('SET_USER_SAVED_POSTS', res)
+        commit('setUserSavedPosts', res)
         return res
       })
       .catch(err => {
@@ -304,7 +304,7 @@ export const actions = {
       })
   },
 
-  async CHECK_SAVED_POSTS({ commit }, ides) {
+  async checkSavedPosts({ commit }, ides) {
     return await this.$axios.$post(`/api/content/check-saved-posts`, ides)
       .then(res => {
         return res.status
@@ -312,11 +312,11 @@ export const actions = {
       .catch(err => console.log(err))
   },
 
-  USER_ARTICLES_OR_BOOKMARK({ commit }, event_name) {
-    commit('SET_STATE_USER_ARTICLES_OR_BOOKMARK', event_name)
+  userArticlesOrBookmark({ commit }, event_name) {
+    commit('setStateUserArticlesOrBookmark', event_name)
   },
 
-  async CHANGE_SETTINGS({ commit, state }, user_info) {
+  async changeSettings({ commit, state }, user_info) {
     return await this.$axios.$post(`/api/user/change-settings`, user_info, {
         headers: {
           Authorization: 'Bearer ' + state.token
@@ -328,7 +328,7 @@ export const actions = {
       .catch(err => console.log(err))
   },
 
-  async CHANGE_PASSWORD({ commit, state }, user_info) {
+  async changePassword({ commit, state }, user_info) {
     return await this.$axios.$post(`/api/user/change-password`, user_info, {
         headers: {
           Authorization: 'Bearer ' + state.token
@@ -340,10 +340,10 @@ export const actions = {
       .catch(err => console.log(err))
   },
 
-  async UPLOAD_AVATAR({ commit, getters }, file) {
+  async uploadAvatar({ commit, getters }, file) {
     return await this.$axios.$post(`/api/user/upload-avatar`, file, {
         headers: {
-          Authorization: 'Bearer ' + getters.GET_USER_TOKEN,
+          Authorization: 'Bearer ' + getters.getUserToken,
           'Content-Type': 'multipart/form-data'
         }
       })
@@ -353,7 +353,7 @@ export const actions = {
       .catch(err => console.log(err))
   },
 
-  async REMOVE_AVATAR({ commit }, user) {
+  async removeAvatar({ commit }, user) {
     return await this.$axios
       .$delete(`/api/user/remove-avatar`, {
         params: { id: user.id }
@@ -365,7 +365,7 @@ export const actions = {
       })
   },
 
-  async ADD_LIKE({ commit, state }, params) {
+  async addLike({ commit, state }, params) {
     return await this.$axios
       .$patch(`/api/content/content-like`, params, {
         headers: {
@@ -378,7 +378,7 @@ export const actions = {
       })
   },
 
-  async CONTENT_LIKES({ commit, state }, post_id) {
+  async contentLikes({ commit, state }, post_id) {
     
     return await this.$axios.$get(`/api/content/get-content-likes-count`, { params: { post_id } })
       .then(result => {
@@ -388,7 +388,7 @@ export const actions = {
         console.log(err)
       })
   },
-  async USER_LIKES({ commit, state }, params) {
+  async userLikes({ commit, state }, params) {
     return await this.$axios.$get(`/api/content/get_user_likes`, {
         params: { user_id: params.user_id, post_id: params.post_id }
       })
@@ -420,25 +420,25 @@ export const actions = {
 }
 
 export const getters = {
-  GET_ALL_NEWS(state) {
+  getAllNews(state) {
     return state.news
   },
-  GET_ALL_ARTICLES(state) {
+  getAllArticles(state) {
     return state.articles
   },
-  GET_ALL_CONTENT(state) {
-    return state.allContent
-  },
-  GET_TREND_NEWS(state) {
-    return state.trend
-  },
-  GET_LOGIN_STATE(state) {
+  // GET_ALL_CONTENT(state) {
+  //   return state.allContent
+  // },
+  // GET_TREND_NEWS(state) {
+  //   return state.trend
+  // },
+  getLoginState(state) {
     return state.auth_state
   },
-  GET_USER_TOKEN(state) {
+  getUserToken(state) {
     return state.token
   },
-  GET_USER(state) {
+  getUser(state) {
     if (typeof state.user === 'object') {
       return state.user
     } else if (typeof state.user === 'string') {
@@ -447,22 +447,22 @@ export const getters = {
       return {}
     }
   },
-  GET_USER_POSTS(state) {
+  getUserPosts(state) {
     return state.user_posts
   },
-  GET_SELECTED_CATEGORY(state) {
-    return state.selected_category
-  },
-  GET_ALL_CARD_INFO(state) {
-    return state.descr_name
-  },
-  GET_USER_ARTICLES_OR_BOOKMARK(state) {
+  // GET_SELECTED_CATEGORY(state) {
+  //   return state.selected_category
+  // },
+  // GET_ALL_CARD_INFO(state) {
+  //   return state.descr_name
+  // },
+  getUserArticlesOrBookmark(state) {
     return state.user_articles_or_bookmark
   },
-  GET_SAVED_POSTS_IDES(state) {
+  getSavedPostsIdes(state) {
     return state.saved_posts_id
   },
-  GET_LOADING(state) {
+  getLoading(state) {
     return state.loading
   },
   getVerifyState(state) {

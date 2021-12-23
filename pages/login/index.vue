@@ -18,7 +18,7 @@ export default {
   computed: {
     ...mapGetters({
       getVerifyState: 'getVerifyState',
-      GET_LOGIN_STATE: 'GET_LOGIN_STATE'
+      getLoginState: 'getLoginState'
     })
   },
   destroyed () {
@@ -28,7 +28,7 @@ export default {
     onSubmit (form) {
       try {
         this.loading = true
-        this.$store.dispatch('LOG_IN', form).then(res => {
+        this.$store.dispatch('login', form).then(res => {
           if (res.status && this.getVerifyState) {
             this.$router.push('/news')
           } else if (res.status && !this.getVerifyState){

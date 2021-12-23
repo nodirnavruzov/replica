@@ -37,7 +37,7 @@ export default {
     return { data }
   },
   mounted() {
-    this.$store.dispatch('LOADING', false)
+    this.$store.dispatch('loading', false)
   }
 }
 </script>

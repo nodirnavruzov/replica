@@ -29,8 +29,8 @@
                   :disabled="nameDisable"
                   class="input"
                   id="input-name"
-                  placeholder="Name"
-                  v-model="user.name"
+                  placeholder="First name"
+                  v-model="user.firstname"
                 ></b-form-input>
               </b-col>
               <div class="btn btn-name" @click="disableBtn('name')">
@@ -46,8 +46,8 @@
                   :disabled="surnameDisable"
                   class="input"
                   id="input-surname"
-                  placeholder="Surname"
-                  v-model="user.surname"
+                  placeholder="Last name"
+                  v-model="user.lastname"
                 ></b-form-input>
               </b-col>
               <div class="btn btn-surname" @click="disableBtn('surname')">
@@ -131,8 +131,8 @@ export default {
   data() {
     return {
       user: {
-        name: '',
-        surname: '',
+        firstname: '',
+        lastname: '',
         email: '',
         current_password: '',
         avatar: null
@@ -147,7 +147,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['GET_USER']),
+    ...mapGetters(['getUser']),
     avatar() {
       return this.img
     },
@@ -165,12 +165,14 @@ export default {
   },
 
   mounted() {
+    console.log('getUser', this.getUser)
+    
     this.user = {
-      id: this.GET_USER.id,
-      name: this.GET_USER.name,
-      surname: this.GET_USER.surname,
-      email: this.GET_USER.email,
-      avatar: this.GET_USER.avatar
+      id: this.getUser.id,
+      firstname: this.getUser.firstname,
+      lastname: this.getUser.lastname,
+      email: this.getUser.email,
+      avatar: this.getUser.avatar
     }
   },
   methods: {
@@ -188,7 +190,7 @@ export default {
         reader.readAsDataURL(this.selectedFile)
       }
       await this.$store
-        .dispatch('UPLOAD_AVATAR', this.form)
+        .dispatch('uploadAvatar', this.form)
         .then(res => {
           this.user.avatar = res.data.url
         })
@@ -196,8 +198,8 @@ export default {
     },
 
     removeAvatar() {
-      const user = this.GET_USER
-      // const res = await this.$store.dispatch('REMOVE_AVATAR', user)
+      const user = this.getUser
+      // const res = await this.$store.dispatch('removeAvatar', user)
       // if (res.status) {
       this.user.avatar = `${''}`
       // }
@@ -205,16 +207,16 @@ export default {
     async change() {
       if(this.user.current_password) {
         const userForm = {
-          id: this.GET_USER.id,
-          name: this.user.name,
-          surname: this.user.surname,
+          id: this.getUser.id,
+          firstname: this.user.firstname,
+          lastname: this.user.lastname,
           email: this.user.email,
           avatar: this.user.avatar,
           current_password: this.user.current_password
         }
-        const result = await this.$store.dispatch('CHANGE_SETTINGS', { userForm })
+        const result = await this.$store.dispatch('changeSettings', { userForm })
         if (result.status) {
-          await this.$store.dispatch('UPDATE_USER').then(res => {
+          await this.$store.dispatch('updateUser').then(res => {
             this.$router.push('/personal-page')
           })
         } else {

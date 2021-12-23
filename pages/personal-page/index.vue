@@ -24,12 +24,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['GET_USER', 'GET_USER_POSTS'])
+    ...mapGetters(['getUser', 'getUserPosts'])
   },
   mounted() {
-    this.user = this.GET_USER
+    this.user = this.getUser
     this.$store
-      .dispatch('USER_POSTS', this.user.id)
+      .dispatch('userPosts', this.user.id)
       .then(articles => {
         this.articles = articles
       })
@@ -37,7 +37,7 @@ export default {
         console.log(err)
       })
     this.$store
-      .dispatch('SAVED_POSTS', this.user.id)
+      .dispatch('savedPosts', this.user.id)
       .then(posts => {
         this.savedPosts = posts
       })
@@ -45,7 +45,7 @@ export default {
         console.log(err)
       })
 
-    this.$store.dispatch('LOADING', false)
+    this.$store.dispatch('loading', false)
   }
 }
 </script>

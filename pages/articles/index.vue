@@ -57,11 +57,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['GET_USER', 'GET_ALL_ARTICLES'])
+    ...mapGetters(['getUser', 'getAllArticles'])
   },
   mounted() {
-    this.user = this.GET_USER
-    this.$store.dispatch('ALL_ARTICLES').then(res => {
+    this.user = this.getUser
+    this.$store.dispatch('allArticles').then(res => {
       this.data = res
       let categoryIcon = null
       for (let i = 0; i < this.data.length; i++) {
@@ -91,7 +91,7 @@ export default {
     EventBus.$on('select-category', this.sortCategory)
     EventBus.$on('search-post', this.searchAricles)
     EventBus.$on('sort-by', this.sortBy)
-    this.$store.dispatch('LOADING', false)
+    this.$store.dispatch('loading', false)
   },
 
   methods: {
@@ -109,7 +109,7 @@ export default {
         })
       } else {
         this.currentSort = value
-        arr = this.GET_ALL_ARTICLES
+        arr = this.getAllArticles
       }
       this.data = arr
       this.paginatedData()
@@ -157,7 +157,7 @@ export default {
 
     searchAricles(words) {
       let articles = null
-      articles = this.$store.getters.GET_ALL_ARTICLES
+      articles = this.$store.getters.getAllArticles
       const foundPosts = articles.filter(post => {
         return post.title.toLowerCase().includes(words)
       })

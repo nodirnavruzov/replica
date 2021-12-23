@@ -1,5 +1,5 @@
 <template>
-  <footer v-if="!GET_LOADING">
+  <footer v-if="!getLoading">
     <div class="container__footer container">
       <div class="row wrapper__footer">
         <div class="a col-md-4">
@@ -58,7 +58,7 @@
 import { mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters(['GET_LOADING'])
+    ...mapGetters(['getLoading'])
   }
 }
 </script>

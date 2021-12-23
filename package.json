@@ -13,6 +13,7 @@
     "@editorjs/list": "^1.6.2",
     "@editorjs/paragraph": "^2.8.0",
     "@nuxtjs/auth-next": "5.0.0-1618898588.9655d0e",
+    "@nuxtjs/dotenv": "^1.4.1",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.9.1",

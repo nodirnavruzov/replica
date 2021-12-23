@@ -60,12 +60,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['GET_USER', 'GET_ALL_NEWS'])
+    ...mapGetters(['getUser', 'getAllNews'])
   },
   mounted() {
-    this.$store.dispatch('ALL_NEWS').then(res => {
+    this.$store.dispatch('allNews').then(res => {
       if (res.length) {
-        this.data = this.GET_ALL_NEWS
+        this.data = this.getAllNews
         let categoryIcon = null
         for (let i = 0; i < this.data.length; i++) {
           categoryIcon = createIcon.makeNews()
@@ -103,7 +103,7 @@ export default {
     }, 500)
     EventBus.$on('search-post', this.searchAricles)
     EventBus.$on('sort-by', this.sortBy)
-    this.$store.dispatch('LOADING', false)
+    this.$store.dispatch('loading', false)
   },
   methods: {
     sortBy(value) {
@@ -120,7 +120,7 @@ export default {
         })
       } else {
         this.currentSort = value
-        arr = this.GET_ALL_NEWS
+        arr = this.getAllNews
       }
       this.data = arr
       this.paginatedData()
@@ -142,7 +142,7 @@ export default {
     },
     searchAricles(words) {
       let news = null
-      news = this.$store.getters.GET_ALL_NEWS
+      news = this.$store.getters.getAllNews
       const foundPosts = news.filter(post => {
         return post.title.toLowerCase().includes(words)
       })

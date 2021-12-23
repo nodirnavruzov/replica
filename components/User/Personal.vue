@@ -117,13 +117,13 @@ export default {
     this.articlesOrBookmark()
   },
   watch: {
-    GET_USER_ARTICLES_OR_BOOKMARK() {
+    getUserArticlesOrBookmark() {
       this.articlesOrBookmark()
     }
   },
 
   computed: {
-    ...mapGetters(['GET_USER_ARTICLES_OR_BOOKMARK'])
+    ...mapGetters(['getUserArticlesOrBookmark'])
   },
   mounted() {},
   methods: {
@@ -144,7 +144,7 @@ export default {
         this.openUserSavedPosts = false
       }
       this.openUserArticles = true
-      this.$store.dispatch('USER_ARTICLES_OR_BOOKMARK', 'open-articles')
+      this.$store.dispatch('userArticlesOrBookmark', 'open-articles')
     },
     showUserBookmark() {
       if (this.openEditor === true || this.openUserArticles === true) {
@@ -152,12 +152,12 @@ export default {
         this.openUserArticles = false
       }
       this.openUserSavedPosts = true
-      this.$store.dispatch('USER_ARTICLES_OR_BOOKMARK', 'open-bookmark')
+      this.$store.dispatch('userArticlesOrBookmark', 'open-bookmark')
     },
     articlesOrBookmark() {
-      if (this.GET_USER_ARTICLES_OR_BOOKMARK == 'open-articles') {
+      if (this.getUserArticlesOrBookmark == 'open-articles') {
         this.showUserArticles()
-      } else if (this.GET_USER_ARTICLES_OR_BOOKMARK == 'open-bookmark') {
+      } else if (this.getUserArticlesOrBookmark == 'open-bookmark') {
         this.showUserBookmark()
       }
     }

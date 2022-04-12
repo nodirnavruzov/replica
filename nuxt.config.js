@@ -77,7 +77,6 @@ export default {
       'BDropdownItem',
       'BFormTextarea',
       'BModal',
-      'BAlert'
     ]
   },
 

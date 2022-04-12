@@ -7,9 +7,9 @@
       </div>
       <div class="links header__links">
         <!-- <nuxt-link class="link navbar-link" to="/main">Home</nuxt-link> -->
-        <nuxt-link class="link navbar-link" to="/news">News</nuxt-link>
-        <nuxt-link class="link navbar-link" to="/articles">Articles</nuxt-link>
-        <nuxt-link class="link navbar-link" to="/about">About</nuxt-link>
+        <nuxt-link class="link navbar-link" to="/news">NEWS</nuxt-link>
+        <nuxt-link class="link navbar-link" to="/articles">ARTICLES</nuxt-link>
+        <nuxt-link class="link navbar-link" to="/about">ABOUT</nuxt-link>
       </div>
       <div class="link link_no-hover" @click="statusChange">
         <div class="header-user-login">

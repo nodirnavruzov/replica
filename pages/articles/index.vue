@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-container class="wrapper__page-card mt-2 mb-4">
+    <!-- <b-container class="wrapper__page-card mt-2 mb-4">
       <Card :info="page_info" />
-    </b-container>
+    </b-container> -->
     <template v-if="!isLoading">
       <Panel :categories="categories" :sortBy="sort" />
     </template>
@@ -43,12 +43,12 @@ export default {
       currentCategory: 'All',
       sort: ['Recent', 'Most views', 'Top'],
       currentSort: 'Recent',
-      page_info: {
-        title: 'Articles',
-        description:
-          'Copyright materials from the editor. Your opinion, your analytics, your forecasts. Collaboration with market experts.',
-        image: require('~/static/img/img-layouts/namroud-gorguis.jpg')
-      },
+      // page_info: {
+      //   title: 'Articles',
+      //   description:
+      //     'Copyright materials from the editor. Your opinion, your analytics, your forecasts. Collaboration with market experts.',
+      //   image: require('~/static/img/img-layouts/namroud-gorguis.jpg')
+      // },
       pageNumber: 1,
       size: 10,
       showBtn: true,

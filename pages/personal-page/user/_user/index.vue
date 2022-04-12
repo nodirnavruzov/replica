@@ -20,7 +20,8 @@ export default {
   },
 
   async asyncData(context) {
-    console.log('asyncData')
+    console.log('context', context.params)
+    
     let user_id = context.params.user.split('-')[1]
     let articles = await axios.get('/api/content/user-posts', {
       params: { user_id }

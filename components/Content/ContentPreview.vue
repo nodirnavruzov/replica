@@ -104,7 +104,7 @@ export default {
       // }
     },
     userLink() {
-      return `/personal-page/user/${this.content.name}-${this.content.user_id}`
+      return `/personal-page/user/${this.content.author.firstname}-${this.content.user_id}`
     },
     ...mapGetters(['getUser', 'getLoginState', 'getSavedPostsIdes'])
   },

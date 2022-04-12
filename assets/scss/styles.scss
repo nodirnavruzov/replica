@@ -38,6 +38,7 @@ body {
   background-color: #f2f2f2;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
 }
 
 /* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
@@ -66,6 +67,24 @@ select {
 }
 $btn-success-color: #006eff;
 $btn-success-color-hover: #004caf;
+
+body::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(37,43,49,0.87843);
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgba(37,43,49,0.87843);
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  background-color: #f9f9fd;
+}
+
+
 
 .bttn {
   background-color: $btn-success-color;
@@ -106,7 +125,7 @@ $btn-success-color-hover: #004caf;
   position: sticky;
   top: 0;
   z-index: 9999;
-  background-color: #252b31;
+  background-color: #252b31e0;
   // box-shadow: 0px 1px 10px 0px #fffaf1;
   justify-content: center;
 
@@ -125,7 +144,7 @@ $btn-success-color-hover: #004caf;
     .header__links {
       .navbar-link {
         margin: 0 10px;
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 500;
         transition: 0.4s;
         &:hover {
@@ -944,13 +963,13 @@ footer {
 //* Panel
 .panel {
   .panel__wrapper {
-    height: 60px;
+    // height: 60px;
     margin-top: 10px;
-    background-color: #ffffff;
     border-radius: 5px;
-    box-shadow: 2px 3px 5px 6px #dadada;
     display: flex;
     justify-content: space-between;
+    box-shadow: 2px 3px 5px 6px #dadada;
+    background-color: #ffffff;
     .panel__search {
       display: flex;
       align-items: center;

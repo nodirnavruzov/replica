@@ -83,7 +83,6 @@ export const mutations = {
 export const actions = {
   // need refactor
   async nuxtClientInit({ commit, getters }) {
-    console.log('nuxtClientInit', getters.getUser)
     const userId = getters.getUser?.id
     const token = localStorage.getItem('token')
     if (getters.getUser) {
@@ -108,7 +107,6 @@ export const actions = {
 
   async register({ commit }, user) {
     return await this.$axios.$post(`/api/auth/register`, { ...user }).then(res => {
-      console.log('res', res)
       return res
     }).catch(err => console.log('error', err)
     )
@@ -117,8 +115,6 @@ export const actions = {
   async login({ commit }, user) {
     return await this.$axios.$post(`/api/auth/login`, { ...user })
       .then(res => {
-        console.log('login =>', res)
-
         if (res.status && res.verify) {
           localStorage.setItem('token', res.token)
           localStorage.setItem('user', JSON.stringify(res.user))

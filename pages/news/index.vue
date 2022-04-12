@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-container class="wrapper__page-card mt-2 mb-4">
+    <!-- <b-container class="wrapper__page-card mt-2 mb-4">
       <Card :info="page_info" />
-    </b-container>
+    </b-container> -->
     <template v-if="!isLoading">
       <Panel :sortBy="sort" />
     </template>

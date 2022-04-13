@@ -41,8 +41,7 @@
           class="btn-login"
           :disabled="disabled"
         >
-        {{ timer }}
-          {{ disabled ? timer : 'Send' }}
+        Send
         </b-button>
     </b-form-group>
     <div class="app-copyright">
@@ -63,7 +62,6 @@ export default {
       loading: false,
       password: true,
       disabled: false,
-      timer: 5,
     }
   },
   destroyed () {
@@ -76,17 +74,6 @@ export default {
     onReSend () {
       this.disabled = true
       this.$emit('reSend', this.form.email = this.email)
-      // const timer = () => {
-      //   setInterval(() => {
-      //     this.timer--
-      //     console.log(this.timer)
-      //     if (this.timer <= 0) {
-      //       this.disabled = false
-      //       clearInterval(timer)
-      //     }
-      //   }, 1000) 
-      // }
-      // timer()
     }
   }
 }

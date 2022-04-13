@@ -1,5 +1,7 @@
 <template>
+
   <div class="news__preview-container">
+
     <div class="news__preview-header">
       <div class="news__preview-header-left">
         <p v-html="content.icon"></p>
@@ -8,7 +10,7 @@
           <b-avatar
             class="news__preview-avatar"
             size="35"
-            :src="content.avatar ? content.avatar : ''"
+            :src="content.author.avatar ? content.author.avatar : ''"
           ></b-avatar>
           <p class="newsPreview__info author">{{ content.author.firstname }} {{ content.author.lastname }}</p>
         </nuxt-link>
@@ -99,9 +101,6 @@ export default {
           return `/articles/${this.content.id}`
         }
       }
-      // else {
-      //   return `${this.$router.history.current.fullPath}/${this.content.id}`
-      // }
     },
     userLink() {
       return `/personal-page/user/${this.content.author.firstname}-${this.content.user_id}`
@@ -191,6 +190,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.content)
     this.user_likes()
     this.getCheck()
   }

@@ -14,7 +14,7 @@
                   <b-avatar
                     class="news__preview-avatar"
                     size="40"
-                    :src="content.avatar ? content.avatar : ''"
+                    :src="content.author.avatar ? content.author.avatar : ''"
                   ></b-avatar>
                   <nuxt-link class="link_no-hover content_user-name" :to="userLink">
                     {{ content.author.firstname }} {{ content.author.lastname }}</nuxt-link

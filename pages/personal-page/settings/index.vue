@@ -192,7 +192,8 @@ export default {
       await this.$store
         .dispatch('uploadAvatar', this.form)
         .then(res => {
-          this.user.avatar = res.data.url
+          console.log(res)
+          this.user.avatar = res.url
         })
         .catch(err => console.log(err))
     },
@@ -215,6 +216,8 @@ export default {
           current_password: this.user.current_password
         }
         const result = await this.$store.dispatch('changeSettings', { userForm })
+        console.log('result', result)
+        
         if (result.status) {
           await this.$store.dispatch('updateUser').then(res => {
             this.$router.push('/personal-page')

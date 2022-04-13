@@ -26,7 +26,7 @@
               >
             </li>
             <li>
-              <a href="https://t.me/BlueSky_FTW" class="nav-footer" to="">
+              <a href="https://t.me/genesis_ftw" class="nav-footer" to="">
                 <img src="~static/img/img-layouts/telegram-app.svg" alt="" />
                 Telegram</a
               >
